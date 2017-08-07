@@ -54,10 +54,7 @@ public class DataPoolResource {
         log.debug("REST request to generate DataPool : {}", requestDTO);
         DataPoolRequest request = DataPoolRequestMapper.toEntity(requestDTO);
 		DataPool result = dataPoolGenerator.generate(request);
-        result = dataPoolRepository.save(result);
-        return ResponseEntity.created(new URI("/api/data-pools/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return createDataPool(result);
     }
 
     /**
