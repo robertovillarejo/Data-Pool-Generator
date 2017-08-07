@@ -1,9 +1,13 @@
 package mx.infotec.dads.datapoolgenerator.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import mx.infotec.dads.datapoolgenerator.domain.DataPool;
 
+import mx.infotec.dads.datapoolgenerator.domain.DataPool;
+import mx.infotec.dads.datapoolgenerator.domain.DataPoolRequest;
 import mx.infotec.dads.datapoolgenerator.repository.DataPoolRepository;
+import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
+import mx.infotec.dads.datapoolgenerator.service.dto.DataPoolRequestDTO;
+import mx.infotec.dads.datapoolgenerator.service.mapper.DataPoolRequestMapper;
 import mx.infotec.dads.datapoolgenerator.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -29,9 +33,31 @@ public class DataPoolResource {
     private static final String ENTITY_NAME = "dataPool";
 
     private final DataPoolRepository dataPoolRepository;
+    
+    private DataPoolGeneratorService dataPoolGenerator;
 
-    public DataPoolResource(DataPoolRepository dataPoolRepository) {
+    public DataPoolResource(DataPoolRepository dataPoolRepository, DataPoolGeneratorService dataPoolGenerator) {
         this.dataPoolRepository = dataPoolRepository;
+        this.dataPoolGenerator = dataPoolGenerator;
+    }
+    
+    /**
+     * POST  /data-pools : Create a new dataPool.
+     *
+     * @param dataPool the dataPool to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new dataPool, or with status 400 (Bad Request) if the dataPool has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/data-pools/generate")
+    @Timed
+    public ResponseEntity<DataPool> generateDataPool(@RequestBody DataPoolRequestDTO requestDTO) throws URISyntaxException {
+        log.debug("REST request to generate DataPool : {}", requestDTO);
+        DataPoolRequest request = DataPoolRequestMapper.toDataPoolRequest(requestDTO);
+		DataPool result = dataPoolGenerator.generate(request);
+        result = dataPoolRepository.save(result);
+        return ResponseEntity.created(new URI("/api/data-pools/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**

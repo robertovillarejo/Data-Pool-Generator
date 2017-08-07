@@ -12,4 +12,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 @Repository
 public interface DataPoolRepository extends MongoRepository<DataPool,String> {
     
+	public DataPool findById(String id);
+	
 }
