@@ -15,4 +15,6 @@ public interface JavaFakerGeneratorService {
 	
 	public List<String> generate(DataType dataType, int n);
 	
+	public List<List<String>> generate(List<DataType> dataTypes, int n);
+	
 }

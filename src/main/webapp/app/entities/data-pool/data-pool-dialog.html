@@ -19,6 +19,28 @@
                     ng-model="vm.dataPool.name"
                     />
         </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.sourceData" for="field_data_source">Data Source</label>
+            <input type="file" class="form-control" name="dataSource" id="field_data_source"
+                    ng-model="vm.dataPool.dataSource"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.columns" for="field_columns">Columns</label>
+            <input type="text" class="form-control" name="columns" id="field_columns"
+                    ng-model="vm.dataPool.columns"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.repeat" for="field_repeat">Repeat</label>
+            <input type="text" class="form-control" name="repeat" id="field_repeat"
+                    ng-model="vm.dataPool.repeat"
+                    />
+            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.repeat.times" for="field_repeat_times">Times</label>
+            <input type="text" class="form-control" name="times" id="field_repeat_times"
+                    ng-model="vm.dataPool.repeat.times"
+                    />
+        </div>
 
     </div>
     <div class="modal-footer">

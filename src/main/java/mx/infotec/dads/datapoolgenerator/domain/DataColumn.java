@@ -2,6 +2,8 @@ package mx.infotec.dads.datapoolgenerator.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A generic DataColumn, useful for several formats
  * @author Roberto Villarejo Martínez
@@ -9,11 +11,23 @@ import java.util.List;
  */
 public class DataColumn {
 	
+	@JsonProperty(value="header")
 	private String header;
 	
 	private List<String> data;
 	
+	@JsonProperty(value="type")
 	private DataType type;
+	
+	public DataColumn() {
+		
+	}
+	
+	public DataColumn(String header, DataType dataType, List<String> data) {
+		this.header = header;
+		this.type = dataType;
+		this.data = data;
+	}
 
 	public String getHeader() {
 		return header;

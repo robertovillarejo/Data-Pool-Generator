@@ -69,4 +69,13 @@ public class JavaFakerGeneratorServiceImpl implements JavaFakerGeneratorService 
 		}
 		return data;
 	}
+
+	@Override
+	public List<List<String>> generate(List<DataType> dataTypes, int n) {
+		List<List<String>> data = new ArrayList<>();
+		for (DataType dataType : dataTypes) {
+			data.add(generate(dataType, n));
+		}
+		return null;
+	}
 }

@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +24,11 @@ public class DataPool implements Serializable {
     @Field("name")
     private String name;
     
-    private List<DataColumn> columns;
+    @JsonProperty(value="data")
+    private List<DataColumn> data;
+    
+    @JsonProperty(value="request")
+    private DataPoolRequest request;
 
     public String getId() {
         return id;
@@ -45,12 +51,20 @@ public class DataPool implements Serializable {
         this.name = name;
     }
 
-    public List<DataColumn> getColumns() {
-		return columns;
+    public List<DataColumn> getData() {
+		return data;
 	}
 
-	public void setColumns(List<DataColumn> columns) {
-		this.columns = columns;
+	public void setData(List<DataColumn> columns) {
+		this.data = columns;
+	}
+
+	public DataPoolRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(DataPoolRequest request) {
+		this.request = request;
 	}
 
 	@Override

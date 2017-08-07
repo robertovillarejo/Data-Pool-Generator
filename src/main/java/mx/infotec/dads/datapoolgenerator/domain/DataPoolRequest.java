@@ -2,6 +2,8 @@ package mx.infotec.dads.datapoolgenerator.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A DataPoolRequest useful for generate a DataPool
  * @author Roberto Villarejo Martínez
@@ -9,33 +11,15 @@ import java.util.List;
  */
 public class DataPoolRequest {
 	
-	private List<DataColumn> sourceData;
-	
-	private String name;
-	
+	@JsonProperty(value="columns")
 	private Columns columns;
 	
+	@JsonProperty(value="repeat")
 	private Repeat repeat;
 	
 	public DataPoolRequest() {
 		this.columns = new Columns();
 		this.repeat = new Repeat();
-	}
-	
-	public List<DataColumn> getSourceData() {
-		return sourceData;
-	}
-
-	public void setSourceData(List<DataColumn> sourceData) {
-		this.sourceData = sourceData;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Columns getColumns() {
@@ -56,8 +40,10 @@ public class DataPoolRequest {
 
 	public class Columns {
 		
+		@JsonProperty(value="data_types")
 		private List<DataColumn> dataColumns;
 		
+		@JsonProperty(value="rows_number")
 		private int rowsNumber;
 
 		public List<DataColumn> getDataColumns() {
@@ -79,10 +65,13 @@ public class DataPoolRequest {
 	
 	public class Repeat {
 		
+		@JsonProperty(value="data_types")
 		private List<DataColumn> dataColumns;
 		
+		@JsonProperty(value="times")
 		private int times = 1;
 		
+		@JsonProperty(value="unique")
 		private boolean uniqueValues = false;
 
 		public List<DataColumn> getDataColumns() {
