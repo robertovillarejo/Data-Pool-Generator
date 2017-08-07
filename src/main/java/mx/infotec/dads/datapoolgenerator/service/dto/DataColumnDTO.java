@@ -1,5 +1,10 @@
 package mx.infotec.dads.datapoolgenerator.service.dto;
 
+/**
+ * The DTO for DataColumn
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public class DataColumnDTO {
 	
 	private String title;

@@ -14,6 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * The implementation of DataPoolGeneratorService interface
+ * @author Roberto Villarejo Martínez
+ *
+ */
 @Service
 public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 

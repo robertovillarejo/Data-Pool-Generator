@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A DataPool.
+ * A DataPool. 
+ * @author Roberto Villarejo Martínez
  */
 @Document(collection = "data_pool")
 public class DataPool implements Serializable {

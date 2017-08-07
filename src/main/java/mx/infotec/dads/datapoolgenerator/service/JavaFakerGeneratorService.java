@@ -4,6 +4,11 @@ import java.util.List;
 
 import mx.infotec.dads.datapoolgenerator.domain.DataType;
 
+/**
+ * The interface for the JavaFakerGeneratorService
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public interface JavaFakerGeneratorService {
 
 	public String generate(DataType dataType);

@@ -2,6 +2,11 @@ package mx.infotec.dads.datapoolgenerator.service.mapper;
 
 import mx.infotec.dads.datapoolgenerator.domain.DataType;
 
+/**
+ * The mapper for DataType
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public class DataTypeMapper {
 	
 	private DataTypeMapper() {

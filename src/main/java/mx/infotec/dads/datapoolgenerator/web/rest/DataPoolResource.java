@@ -42,17 +42,17 @@ public class DataPoolResource {
     }
     
     /**
-     * POST  /data-pools : Create a new dataPool.
+     * POST  /data-pools/generate : Generate a new dataPool from a request.
      *
-     * @param dataPool the dataPool to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new dataPool, or with status 400 (Bad Request) if the dataPool has already an ID
+     * @param requestDTO the requestDTO that generate a new dataPool
+     * @return the ResponseEntity with status 201 (Created) and with body the new dataPool, or with status 400 (Bad Request) if the requestDTO has errors
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/data-pools/generate")
     @Timed
     public ResponseEntity<DataPool> generateDataPool(@RequestBody DataPoolRequestDTO requestDTO) throws URISyntaxException {
         log.debug("REST request to generate DataPool : {}", requestDTO);
-        DataPoolRequest request = DataPoolRequestMapper.toDataPoolRequest(requestDTO);
+        DataPoolRequest request = DataPoolRequestMapper.toEntity(requestDTO);
 		DataPool result = dataPoolGenerator.generate(request);
         result = dataPoolRepository.save(result);
         return ResponseEntity.created(new URI("/api/data-pools/" + result.getId()))

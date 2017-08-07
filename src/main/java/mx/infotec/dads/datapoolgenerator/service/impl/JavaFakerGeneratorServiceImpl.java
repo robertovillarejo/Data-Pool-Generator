@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.github.javafaker.Faker;
 
+/**
+ * The implementation of JavaFakerGeneratorService interface
+ * @author roberto.villarejo
+ *
+ */
 @Service
 public class JavaFakerGeneratorServiceImpl implements JavaFakerGeneratorService {
 

@@ -3,9 +3,14 @@ package mx.infotec.dads.datapoolgenerator.service.mapper;
 import mx.infotec.dads.datapoolgenerator.domain.DataPoolRequest;
 import mx.infotec.dads.datapoolgenerator.service.dto.DataPoolRequestDTO;
 
+/**
+ * The mapper for DataPoolRequest/DataPoolRequestDTO
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public class DataPoolRequestMapper {
 		
-	public static DataPoolRequest toDataPoolRequest(DataPoolRequestDTO requestDTO) {
+	public static DataPoolRequest toEntity(DataPoolRequestDTO requestDTO) {
 		DataPoolRequest request = new DataPoolRequest();
 		request.setName(requestDTO.getName());
 		request.setSourceData(requestDTO.getSourceData());

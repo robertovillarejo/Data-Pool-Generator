@@ -5,6 +5,11 @@ import java.util.List;
 import mx.infotec.dads.datapoolgenerator.domain.DataColumn;
 import mx.infotec.dads.datapoolgenerator.domain.DataType;
 
+/**
+ * The interface for DataGeneratorService
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public interface DataGeneratorService {
 
 	/**

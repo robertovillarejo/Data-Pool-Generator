@@ -6,7 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import mx.infotec.dads.datapoolgenerator.domain.DataColumn;
 
-
+/**
+ * The DTO for DataPoolRequest
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public class DataPoolRequestDTO {
 	
 	@JsonProperty(value="name")

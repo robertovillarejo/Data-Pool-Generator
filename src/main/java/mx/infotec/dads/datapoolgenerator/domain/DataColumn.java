@@ -2,6 +2,11 @@ package mx.infotec.dads.datapoolgenerator.domain;
 
 import java.util.List;
 
+/**
+ * A generic DataColumn, useful for several formats
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public class DataColumn {
 	
 	private String header;

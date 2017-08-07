@@ -2,6 +2,11 @@ package mx.infotec.dads.datapoolgenerator.domain;
 
 import java.util.List;
 
+/**
+ * A DataPoolRequest useful for generate a DataPool
+ * @author Roberto Villarejo Martínez
+ *
+ */
 public class DataPoolRequest {
 	
 	private List<DataColumn> sourceData;
