@@ -3,12 +3,14 @@ package mx.infotec.dads.datapoolgenerator.domain;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * A generic DataColumn, useful for several formats
  * @author Roberto Villarejo Martínez
  *
  */
+@JsonPropertyOrder({"header", "type", "data"})
 public class DataColumn {
 	
 	@JsonProperty(value="header")
@@ -45,11 +47,11 @@ public class DataColumn {
 		this.data = data;
 	}
 
-	public DataType getDataType() {
+	public DataType getType() {
 		return type;
 	}
 
-	public void setDataType(DataType dataType) {
+	public void setType(DataType dataType) {
 		this.type = dataType;
 	}
 

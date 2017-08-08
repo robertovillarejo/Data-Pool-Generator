@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class DataPool implements Serializable {
     private String name;
     
     @JsonProperty(value="data")
-    private List<DataColumn> data;
+    private List<DataColumn> data = new ArrayList<>();
     
     @JsonProperty(value="request")
     private DataPoolRequest request;

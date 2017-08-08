@@ -70,7 +70,7 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 
 	private void addColumns(DataPool dataPool) {
 		int rowsNumber;
-		if (dataPool.getData() == null) rowsNumber = dataPool.getRequest().getColumns().getRowsNumber();
+		if (dataPool.getData() == null || dataPool.getData().isEmpty()) rowsNumber = dataPool.getRequest().getColumns().getRowsNumber();
 		else rowsNumber = dataPool.getData().get(0).getData().size();
 		dataPool.getData().addAll(generate(dataPool.getRequest().getColumns().getDataColumns(), rowsNumber));
 	}
@@ -78,7 +78,7 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 	private List<DataColumn> generate(List<DataColumn> dataColumns, int n) {
 		List<DataColumn> result = new ArrayList<>();
 		for (DataColumn dataColumn : dataColumns) {
-			result.add(new DataColumn(dataColumn.getHeader(), dataColumn.getDataType(), fakerService.generate(dataColumn.getDataType(), n)));
+			result.add(new DataColumn(dataColumn.getHeader(), dataColumn.getType(), fakerService.generate(dataColumn.getType(), n)));
 		}
 		return result;
 	}

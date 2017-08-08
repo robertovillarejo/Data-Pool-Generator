@@ -1,14 +1,17 @@
 package mx.infotec.dads.datapoolgenerator.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * A DataPoolRequest useful for generate a DataPool
  * @author Roberto Villarejo Martínez
  *
  */
+@JsonPropertyOrder({"columns", "repeat"})
 public class DataPoolRequest {
 	
 	@JsonProperty(value="columns")
@@ -38,10 +41,11 @@ public class DataPoolRequest {
 		this.repeat = repeat;
 	}
 
+	@JsonPropertyOrder({"rows_number", "data_types"})
 	public class Columns {
 		
 		@JsonProperty(value="data_types")
-		private List<DataColumn> dataColumns;
+		private List<DataColumn> dataColumns = new ArrayList<>();
 		
 		@JsonProperty(value="rows_number")
 		private int rowsNumber;
@@ -63,10 +67,11 @@ public class DataPoolRequest {
 		}
 	}
 	
+	@JsonPropertyOrder({"times", "unique", "data_types"})
 	public class Repeat {
 		
 		@JsonProperty(value="data_types")
-		private List<DataColumn> dataColumns;
+		private List<DataColumn> dataColumns = new ArrayList<>();
 		
 		@JsonProperty(value="times")
 		private int times = 1;
