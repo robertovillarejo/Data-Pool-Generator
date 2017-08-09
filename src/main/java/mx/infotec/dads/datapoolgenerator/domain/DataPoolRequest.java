@@ -41,13 +41,13 @@ public class DataPoolRequest {
 		this.repeat = repeat;
 	}
 
-	@JsonPropertyOrder({"rows_number", "data_types"})
+	@JsonPropertyOrder({"rowsNumber", "dataTypes"})
 	public class Columns {
 		
-		@JsonProperty(value="data_types")
+		@JsonProperty(value="dataTypes")
 		private List<DataColumn> dataColumns = new ArrayList<>();
 		
-		@JsonProperty(value="rows_number")
+		@JsonProperty(value="rowsNumber")
 		private int rowsNumber;
 
 		public List<DataColumn> getDataColumns() {
@@ -67,10 +67,10 @@ public class DataPoolRequest {
 		}
 	}
 	
-	@JsonPropertyOrder({"times", "unique", "data_types"})
+	@JsonPropertyOrder({"times", "unique", "dataTypes"})
 	public class Repeat {
 		
-		@JsonProperty(value="data_types")
+		@JsonProperty(value="dataTypes")
 		private List<DataColumn> dataColumns = new ArrayList<>();
 		
 		@JsonProperty(value="times")

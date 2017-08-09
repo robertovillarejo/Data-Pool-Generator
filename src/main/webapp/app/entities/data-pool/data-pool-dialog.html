@@ -1,47 +1,128 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
         <h4 class="modal-title" id="myDataPoolLabel" data-translate="dataPoolGeneratorApp.dataPool.home.createOrEditLabel">Create or edit a Data Pool</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.dataPool.id">
             <label for="id" data-translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.dataPool.id" readonly />
+            <input type="text" class="form-control" id="id" name="id" ng-model="vm.dataPool.id" readonly />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.dataPool.name"
-                    />
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.dataPool.name" />
         </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.sourceData" for="field_data_source">Data Source</label>
-            <input type="file" class="form-control" name="dataSource" id="field_data_source"
-                    ng-model="vm.dataPool.dataSource"
-                    />
+        <div class="panel panel-default">
+            <div class="panel-heading">Data Pool</div>
+            <div class="panel-body">
+                <h4>Source Data</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Header</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="dataType in vm.dataPool.data">
+                            <td>{{ dataType.header }}</td>
+                            <td>{{ dataType.type }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Columns</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Header</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="dataType in vm.dataPool.request.columns.dataTypes">
+                            <td>{{ dataType.header }}</td>
+                            <td>{{ dataType.type }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Repeat</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Header</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="dataType in vm.dataPool.request.repeat.dataTypes">
+                            <td>{{ dataType.header }}</td>
+                            <td>{{ dataType.type }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.columns" for="field_columns">Columns</label>
-            <input type="text" class="form-control" name="columns" id="field_columns"
-                    ng-model="vm.dataPool.columns"
-                    />
+        <div class="panel panel-default">
+            <div class="panel-heading">Source Data</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.data" for="field_data">Data</label>
+                    <input type="file" class="form-control" name="data" id="field_data" />
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.repeat" for="field_repeat">Repeat</label>
-            <input type="text" class="form-control" name="repeat" id="field_repeat"
-                    ng-model="vm.dataPool.repeat"
+        <div class="panel panel-default">
+            <div class="panel-heading">Add Columns</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.columns.rowsNumber" for="field_rows_number">Rows Number</label>
+                    <input type="number" min="0" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.columns.rowsNumber"
                     />
-            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.repeat.times" for="field_repeat_times">Times</label>
-            <input type="text" class="form-control" name="times" id="field_repeat_times"
-                    ng-model="vm.dataPool.repeat.times"
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_data_type_header">Header</label>
+                    <input type="text" class="form-control" name="dataTypeHeader" id="field_data_type_header" ng-model="vm.columns.dataType.header"
                     />
+                    <label>Data Type</label>
+                    <select class="form-control" name="dataType" ng-model="vm.columns.dataType.type">
+                <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
+            </select>
+                    <button type="button" class="btn btn-default" ng-click="vm.addDataType('columns')">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+                </div>
+            </div>
         </div>
-
+        <div class="panel panel-default">
+            <div class="panel-heading">Repeat</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.repeat.times" for="field_times">Times</label>
+                    <input type="number" min="1" class="form-control" name="times" id="field_times" ng-model="vm.dataPool.request.repeat.times"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="unique">
+                <input type="checkbox" id="unique" name="unique" ng-model="vm.dataPool.request.repeat.unique">
+                <span data-translate="dataPoolGeneratorApp.dataPool.request.repeat.unique">Unique Values</span>
+            </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_repeat_data_type_header">Header</label>
+                    <input type="text" class="form-control" name="repeatDataTypeHeader" id="field_repeat_data_type_header" ng-model="vm.repeat.dataType.header"
+                    />
+                    <label>Data Type</label>
+                    <select class="form-control" name="dataType" ng-model="vm.repeat.dataType.type">
+                        <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
+                    </select>
+                    <button type="button" class="btn btn-default" ng-click="vm.addDataType('repeat')">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

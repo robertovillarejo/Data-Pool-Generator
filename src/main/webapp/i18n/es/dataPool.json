@@ -15,7 +15,19 @@
             "detail": {
                 "title": "Data Pool"
             },
-            "name": "Name"
+            "name": "Name",
+            "data": "Datos",
+            "request": {
+                "columns": {
+                    "rowsNumber": "Número de filas",
+                    "dataTypes": "Tipos de datos"
+                },
+                "repeat": {
+                    "times": "Número de repeticiones",
+                    "unique": "Valores únicos",
+                    "dataTypes": "Tipos de datos"
+                }
+            }
         }
     }
 }
