@@ -6,5 +6,21 @@ package mx.infotec.dads.datapoolgenerator.domain;
  *
  */
 public enum DataType {
-	NAME, LAST_NAME, EMAIL, LOREM, COMPANY
+	NAME, 
+	LAST_NAME, 
+	EMAIL, 
+	LOREM, 
+	COMPANY, 
+	CITY, 
+	COUNTRY, 
+	STATE, 
+	ZIP_CODE, 
+	COLOR, 
+	DEPARTMENT, 
+	PRICE, 
+	PROFESSION, 
+	PASSWORD,
+	FULL_NAME,
+	PHONE_NUMBER,
+	UNIVERSITY
 }

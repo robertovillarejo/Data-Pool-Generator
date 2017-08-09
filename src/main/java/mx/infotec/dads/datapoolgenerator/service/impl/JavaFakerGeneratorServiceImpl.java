@@ -5,6 +5,7 @@ import mx.infotec.dads.datapoolgenerator.service.JavaFakerGeneratorService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class JavaFakerGeneratorServiceImpl implements JavaFakerGeneratorService 
 	Faker faker;
 
 	public JavaFakerGeneratorServiceImpl() {
-		faker = new Faker();
+		faker = new Faker(new Locale("es-MX"));
 	}
 
 	@Override
@@ -51,6 +52,54 @@ public class JavaFakerGeneratorServiceImpl implements JavaFakerGeneratorService 
 
 		case COMPANY:
 			data = faker.company().name();
+			break;
+			
+		case CITY:
+			data = faker.address().city();
+			break;
+			
+		case COUNTRY:
+			data = faker.address().country();
+			break;
+			
+		case STATE:
+			data = faker.address().state();
+			break;
+			
+		case ZIP_CODE:
+			data = faker.address().zipCode();
+			break;
+			
+		case COLOR:
+			data = faker.color().name();
+			break;
+			
+		case DEPARTMENT:
+			data = faker.commerce().department();
+			break;
+			
+		case PRICE:
+			data = faker.commerce().price();
+			break;
+			
+		case PROFESSION:
+			data = faker.company().profession();
+			break;
+			
+		case PASSWORD:
+			data = faker.internet().password();
+			break;
+			
+		case FULL_NAME:
+			data = faker.name().fullName();
+			break;
+			
+		case PHONE_NUMBER:
+			data = faker.phoneNumber().phoneNumber();
+			break;
+			
+		case UNIVERSITY:
+			data = faker.university().name();
 			break;
 
 		default:

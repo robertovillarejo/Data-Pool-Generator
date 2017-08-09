@@ -16,7 +16,25 @@
         vm.addDataType = addDataType;
         vm.removeDataType = removeDataType;
         vm.toJson = toJson;
-        vm.dataTypes = ["NAME", "LAST_NAME", "EMAIL", "COMPANY", "LOREM"];
+        vm.dataTypes = [
+            "NAME",
+            "LAST_NAME",
+            "EMAIL",
+            "LOREM",
+            "COMPANY",
+            "CITY",
+            "COUNTRY",
+            "STATE",
+            "ZIP_CODE",
+            "COLOR",
+            "DEPARTMENT",
+            "PRICE", 
+            "PROFESSION", 
+            "PASSWORD", 
+            "FULL_NAME", 
+            "PHONE_NUMBER", 
+            "UNIVERSITY"
+        ];
 
         if (vm.dataPool.id == null) {
             vm.dataPool.request = {
@@ -76,11 +94,11 @@
             if ("columns" === place) {
                 var index = vm.dataPool.request.columns.dataTypes.indexOf(dataType);
                 vm.dataPool.request.columns.dataTypes.splice(index, 1);
-            } 
+            }
             if ("sourceData" === place) {
                 var index = vm.dataPool.sourceData.indexOf(dataType);
                 vm.dataPool.sourceData.splice(index, 1);
-            } 
+            }
             if ("repeat" === place) {
                 var index = vm.dataPool.request.repeat.dataTypes.indexOf(dataType);
                 vm.dataPool.request.repeat.dataTypes.splice(index, 1);
@@ -125,7 +143,7 @@
                     var data = element[header];
                     if (data !== null && data !== undefined && data !== "") {
                         columns[header].push(data);
-                    } 
+                    }
                 });
             });
             var dataColumns = [];
