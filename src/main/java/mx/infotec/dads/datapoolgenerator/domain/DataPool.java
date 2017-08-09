@@ -25,6 +25,9 @@ public class DataPool implements Serializable {
     @Field("name")
     private String name;
     
+    @JsonProperty("sourceData")
+    private List<DataColumn> sourceData = new ArrayList<>();
+    
     @JsonProperty(value="data")
     private List<DataColumn> data = new ArrayList<>();
     
@@ -66,6 +69,14 @@ public class DataPool implements Serializable {
 
 	public void setRequest(DataPoolRequest request) {
 		this.request = request;
+	}
+
+	public List<DataColumn> getSourceData() {
+		return sourceData;
+	}
+
+	public void setSourceData(List<DataColumn> sourceData) {
+		this.sourceData = sourceData;
 	}
 
 	@Override

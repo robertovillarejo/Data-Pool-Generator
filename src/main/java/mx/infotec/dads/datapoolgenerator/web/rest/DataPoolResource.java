@@ -75,12 +75,7 @@ public class DataPoolResource {
             return createDataPool(dataPool);
         }
         DataPool result;
-        if (dataPool.getData().size() != (
-        		dataPool.getRequest().getColumns().getDataColumns().size()
-        		+ dataPool.getRequest().getRepeat().getDataColumns().size())) {
-        	result = dataPoolGenerator.generate(dataPool);
-        }
-        result = dataPoolRepository.save(dataPool);
+        result = dataPoolRepository.save(dataPoolGenerator.generate(dataPool));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataPool.getId().toString()))
             .body(result);

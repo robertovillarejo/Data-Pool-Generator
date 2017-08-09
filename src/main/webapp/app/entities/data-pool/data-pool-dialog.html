@@ -26,9 +26,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="dataType in vm.dataPool.data">
+                        <tr ng-repeat="dataType in vm.dataPool.sourceData">
                             <td>{{ dataType.header }}</td>
                             <td>{{ dataType.type }}</td>
+                            <td><button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'sourceData')">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -44,6 +47,9 @@
                         <tr ng-repeat="dataType in vm.dataPool.request.columns.dataTypes">
                             <td>{{ dataType.header }}</td>
                             <td>{{ dataType.type }}</td>
+                            <td><button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'columns')">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -59,6 +65,9 @@
                         <tr ng-repeat="dataType in vm.dataPool.request.repeat.dataTypes">
                             <td>{{ dataType.header }}</td>
                             <td>{{ dataType.type }}</td>
+                            <td><button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'repeat')">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -68,8 +77,11 @@
             <div class="panel-heading">Source Data</div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.data" for="field_data">Data</label>
-                    <input type="file" class="form-control" name="data" id="field_data" />
+                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.dataSource" for="field_data_source">Data Source</label>
+                    <input type="file" class="form-control" name="dataSource" ng-model="vm.dataSourceFile" id="field_data_source" />
+                    <button type="button" class="btn btn-default" ng-click="vm.toJson()">
+                <span class="glyphicon glyphicon-upload"></span>
+            </button>
                 </div>
             </div>
         </div>

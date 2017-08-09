@@ -6,12 +6,15 @@ import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
 import mx.infotec.dads.datapoolgenerator.service.JavaFakerGeneratorService;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.rits.cloning.Cloner;
 
 /**
  * The implementation of DataPoolGeneratorService interface
@@ -24,6 +27,7 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 	private final Logger log = LoggerFactory.getLogger(DataPoolGeneratorServiceImpl.class);
 
 	private JavaFakerGeneratorService fakerService;
+	private Cloner cloner = new Cloner();
 
 	@Autowired
 	public DataPoolGeneratorServiceImpl(JavaFakerGeneratorService fakerService) {
@@ -32,9 +36,16 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 
 	@Override
 	public DataPool generate(DataPool dataPool) {
+		copyDataSource(dataPool);
 		addColumns(dataPool);
 		repeatData(dataPool);
 		return dataPool;
+	}
+	
+	private void copyDataSource(DataPool dataPool) {
+		List<DataColumn> listDataColumn = cloner.deepClone(dataPool.getSourceData());
+		dataPool.getData().clear();
+		dataPool.setData(listDataColumn);
 	}
 
 	private void repeatData(DataPool dataPool) {

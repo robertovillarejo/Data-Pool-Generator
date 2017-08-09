@@ -14,6 +14,8 @@
         vm.clear = clear;
         vm.save = save;
         vm.addDataType = addDataType;
+        vm.removeDataType = removeDataType;
+        vm.toJson = toJson;
         vm.dataTypes = ["NAME", "LAST_NAME", "EMAIL", "COMPANY", "LOREM"];
 
         if (vm.dataPool.id == null) {
@@ -65,8 +67,76 @@
                 vm.dataPool.request.columns.dataTypes.push(vm.columns.dataType);
             } else {
                 vm.dataPool.request.repeat.dataTypes.push(vm.repeat.dataType);
-            }            
+            }
             vm.columns.dataType = {};
+        }
+
+        function removeDataType(dataType, place) {
+            console.log(dataType);
+            if ("columns" === place) {
+                var index = vm.dataPool.request.columns.dataTypes.indexOf(dataType);
+                vm.dataPool.request.columns.dataTypes.splice(index, 1);
+            } 
+            if ("sourceData" === place) {
+                var index = vm.dataPool.sourceData.indexOf(dataType);
+                vm.dataPool.sourceData.splice(index, 1);
+            } 
+            if ("repeat" === place) {
+                var index = vm.dataPool.request.repeat.dataTypes.indexOf(dataType);
+                vm.dataPool.request.repeat.dataTypes.splice(index, 1);
+            }
+        }
+
+        function toJson() {
+            var config = {
+                delimiter: "",	// auto-detect
+                newline: "",	// auto-detect
+                quoteChar: '"',
+                header: true,
+                dynamicTyping: false,
+                preview: 0,
+                encoding: "windows-1250",
+                worker: false,
+                comments: false,
+                step: undefined,
+                complete: addSourceData,
+                error: undefined,
+                download: false,
+                skipEmptyLines: false,
+                chunk: undefined,
+                fastMode: undefined,
+                beforeFirstChunk: undefined,
+                withCredentials: undefined
+            }
+            var fileElement = $("#field_data_source");
+            Papa.parse(fileElement[0].files[0], config);
+        }
+
+        function addSourceData(results) {
+            var columns = {};
+            var headers = Object.keys(results.data[0]);
+            //Create arrays for store the data with header as key
+            headers.forEach(function (header) {
+                columns[header] = [];
+            });
+            //Store data in arrays
+            results.data.forEach(function (element) {
+                headers.forEach(function (header) {
+                    var data = element[header];
+                    if (data !== null && data !== undefined && data !== "") {
+                        columns[header].push(data);
+                    } 
+                });
+            });
+            var dataColumns = [];
+            //Convert data to DataColumn Array
+            headers.forEach(function (header) {
+                var dataColumn = {};
+                dataColumn.header = header;
+                dataColumn.data = columns[header];
+                dataColumns.push(dataColumn);
+            });
+            vm.dataPool.sourceData = dataColumns;
         }
     }
 })();
