@@ -9,6 +9,17 @@ import mx.infotec.dads.datapoolgenerator.domain.DataPool;
  */
 public interface DataPoolGeneratorService {
 
-	public DataPool generate(DataPool dataPool);
+	public default DataPool generate(DataPool dataPool) {
+		copyDataSource(dataPool);
+		addColumns(dataPool);
+		repeatData(dataPool);
+		return dataPool;
+	}
+
+	public abstract void repeatData(DataPool dataPool);
+
+	public abstract void addColumns(DataPool dataPool);
+
+	public abstract void copyDataSource(DataPool dataPool);
 	
 }

@@ -3,106 +3,51 @@ package mx.infotec.dads.datapoolgenerator.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 /**
  * A DataPoolRequest useful for generate a DataPool
  * @author Roberto Villarejo Martínez
  *
  */
-@JsonPropertyOrder({"columns", "repeat"})
 public class DataPoolRequest {
 	
-	@JsonProperty(value="columns")
-	private Columns columns;
+	private int rowsNumber;
 	
-	@JsonProperty(value="repeat")
-	private Repeat repeat;
+	private List<DataColumn> addDataTypes  = new ArrayList<>();
 	
-	public DataPoolRequest() {
-		this.columns = new Columns();
-		this.repeat = new Repeat();
-	}
-
-	public Columns getColumns() {
-		return columns;
-	}
-
-	public void setColumns(Columns columns) {
-		this.columns = columns;
-	}
-
-	public Repeat getRepeat() {
-		return repeat;
-	}
-
-	public void setRepeat(Repeat repeat) {
-		this.repeat = repeat;
-	}
-
-	@JsonPropertyOrder({"rowsNumber", "dataTypes"})
-	public class Columns {
-		
-		@JsonProperty(value="dataTypes")
-		private List<DataColumn> dataColumns = new ArrayList<>();
-		
-		@JsonProperty(value="rowsNumber")
-		private int rowsNumber;
-
-		public List<DataColumn> getDataColumns() {
-			return dataColumns;
-		}
-
-		public void setDataColumns(List<DataColumn> dataColumns) {
-			this.dataColumns = dataColumns;
-		}
-
-		public int getRowsNumber() {
-			return rowsNumber;
-		}
-
-		public void setRowsNumber(int rowsNumber) {
-			this.rowsNumber = rowsNumber;
-		}
-	}
+	private List<DataColumn> repeatDataTypes  = new ArrayList<>();
 	
-	@JsonPropertyOrder({"times", "unique", "dataTypes"})
-	public class Repeat {
-		
-		@JsonProperty(value="dataTypes")
-		private List<DataColumn> dataColumns = new ArrayList<>();
-		
-		@JsonProperty(value="times")
-		private int times = 1;
-		
-		@JsonProperty(value="unique")
-		private boolean uniqueValues = false;
+	private int repeatTimes;
 
-		public List<DataColumn> getDataColumns() {
-			return dataColumns;
-		}
-
-		public void setDataColumns(List<DataColumn> dataColumns) {
-			this.dataColumns = dataColumns;
-		}
-
-		public int getTimes() {
-			return times;
-		}
-
-		public void setTimes(int times) {
-			this.times = times;
-		}
-
-		public boolean isUniqueValues() {
-			return uniqueValues;
-		}
-
-		public void setUniqueValues(boolean uniqueValues) {
-			this.uniqueValues = uniqueValues;
-		}
-		
+	public int getRowsNumber() {
+		return rowsNumber;
 	}
+
+	public void setRowsNumber(int rowsNumber) {
+		this.rowsNumber = rowsNumber;
+	}
+
+	public List<DataColumn> getAddDataTypes() {
+		return addDataTypes;
+	}
+
+	public void setAddDataTypes(List<DataColumn> addDataTypes) {
+		this.addDataTypes = addDataTypes;
+	}
+
+	public List<DataColumn> getRepeatDataTypes() {
+		return repeatDataTypes;
+	}
+
+	public void setRepeatDataTypes(List<DataColumn> repeatDataTypes) {
+		this.repeatDataTypes = repeatDataTypes;
+	}
+
+	public int getRepeatTimes() {
+		return repeatTimes;
+	}
+
+	public void setRepeatTimes(int repeatTimes) {
+		this.repeatTimes = repeatTimes;
+	}	
 
 }

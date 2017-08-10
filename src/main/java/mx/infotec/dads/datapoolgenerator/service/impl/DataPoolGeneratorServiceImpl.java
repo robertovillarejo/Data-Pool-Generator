@@ -6,7 +6,6 @@ import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
 import mx.infotec.dads.datapoolgenerator.service.JavaFakerGeneratorService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -35,39 +34,22 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 	}
 
 	@Override
-	public DataPool generate(DataPool dataPool) {
-		copyDataSource(dataPool);
-		addColumns(dataPool);
-		repeatData(dataPool);
-		return dataPool;
-	}
-	
-	private void copyDataSource(DataPool dataPool) {
+	public void copyDataSource(DataPool dataPool) {
 		List<DataColumn> listDataColumn = cloner.deepClone(dataPool.getSourceData());
 		dataPool.getData().clear();
 		dataPool.setData(listDataColumn);
 	}
 
-	private void repeatData(DataPool dataPool) {
+	@Override
+	public void repeatData(DataPool dataPool) {
+		// Repeat current data
+		repeatData(dataPool, dataPool.getRequest().getRepeatTimes());
+		//Generate and add repeated data
+		generateRepeatData(dataPool);
 
-		int rowsNumber;
-		if (dataPool.getData() == null || dataPool.getData().isEmpty()) rowsNumber = dataPool.getRequest().getColumns().getRowsNumber();
-		else rowsNumber = dataPool.getData().get(0).getData().size();
-
-		int size = dataPool.getRequest().getRepeat().getTimes() * rowsNumber;
-		if (!dataPool.getRequest().getRepeat().isUniqueValues()) {	//Add Columns first and then repeat whole data
-			
-			dataPool.getData().addAll(generate(dataPool.getRequest().getRepeat().getDataColumns(), rowsNumber));
-			repeatData(dataPool, dataPool.getRequest().getRepeat().getTimes());
-			
-		} else {	//Repeat the data, generate the columns with unique values and then add these to data
-			
-			repeatData(dataPool, dataPool.getRequest().getRepeat().getTimes());
-			dataPool.getData().addAll(generate(dataPool.getRequest().getRepeat().getDataColumns(), size));
-		}		
 	}
 
-	private void repeatData(DataPool dataPool, int n) {
+	public void repeatData(DataPool dataPool, int n) {
 
 		for (DataColumn dataColumn : dataPool.getData()) {
 			List<String> data = new ArrayList<>();
@@ -79,17 +61,51 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 
 	}
 
-	private void addColumns(DataPool dataPool) {
+	@Override
+	public void addColumns(DataPool dataPool) {
 		int rowsNumber;
-		if (dataPool.getData() == null || dataPool.getData().isEmpty()) rowsNumber = dataPool.getRequest().getColumns().getRowsNumber();
+		if (dataPool.getSourceData() == null || dataPool.getSourceData().isEmpty()) rowsNumber = dataPool.getRequest().getRowsNumber();
 		else rowsNumber = dataPool.getData().get(0).getData().size();
-		dataPool.getData().addAll(generate(dataPool.getRequest().getColumns().getDataColumns(), rowsNumber));
+		dataPool.getData().addAll(generate(dataPool.getRequest().getAddDataTypes(), rowsNumber));
 	}
-	
+
 	private List<DataColumn> generate(List<DataColumn> dataColumns, int n) {
 		List<DataColumn> result = new ArrayList<>();
 		for (DataColumn dataColumn : dataColumns) {
 			result.add(new DataColumn(dataColumn.getHeader(), dataColumn.getType(), fakerService.generate(dataColumn.getType(), n)));
+		}
+		return result;
+	}
+
+	private void generateRepeatData(DataPool dataPool) {
+		int rowsNumber;
+		if (dataPool.getSourceData() == null || dataPool.getSourceData().isEmpty()) rowsNumber = dataPool.getRequest().getRowsNumber();
+		else rowsNumber = dataPool.getSourceData().get(0).getData().size();
+		dataPool.getData().addAll(
+				generateRepeat(
+						dataPool.getRequest().getRepeatDataTypes(), rowsNumber, dataPool.getRequest().getRepeatTimes()
+						)
+				);
+
+	}
+
+	private List<DataColumn> generateRepeat(List<DataColumn> dataColumns, int n, int repeat) {
+		List<DataColumn> result = new ArrayList<>();
+		for (DataColumn dataColumn : dataColumns) {
+
+			DataColumn dataCol = new DataColumn();
+			dataCol.setHeader(dataColumn.getHeader());
+			dataCol.setType(dataColumn.getType());
+
+			for (int i = 0; i < repeat; i++) {
+				List<String> data = new ArrayList<>();
+				String oneData = fakerService.generate(dataColumn.getType());
+				for (int j = 0; j < n; j++) {
+					data.add(oneData);
+				}
+				dataCol.getData().addAll(data);
+			}
+			result.add(dataCol);
 		}
 		return result;
 	}

@@ -4,6 +4,7 @@ import mx.infotec.dads.datapoolgenerator.DataPoolGeneratorApp;
 
 import mx.infotec.dads.datapoolgenerator.domain.DataPool;
 import mx.infotec.dads.datapoolgenerator.repository.DataPoolRepository;
+import mx.infotec.dads.datapoolgenerator.service.CsvGeneratorService;
 import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
 import mx.infotec.dads.datapoolgenerator.web.rest.errors.ExceptionTranslator;
 
@@ -44,6 +45,9 @@ public class DataPoolResourceIntTest {
     
     @Autowired
     private DataPoolGeneratorService dataPoolGenerator;
+    
+    @Autowired
+    private CsvGeneratorService csvGenerator;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -61,7 +65,7 @@ public class DataPoolResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        DataPoolResource dataPoolResource = new DataPoolResource(dataPoolRepository, dataPoolGenerator);
+        DataPoolResource dataPoolResource = new DataPoolResource(dataPoolRepository, dataPoolGenerator, csvGenerator);
         this.restDataPoolMockMvc = MockMvcBuilders.standaloneSetup(dataPoolResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

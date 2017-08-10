@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="dataType in vm.dataPool.request.columns.dataTypes">
+                        <tr ng-repeat="dataType in vm.dataPool.request.addDataTypes">
                             <td>{{ dataType.header }}</td>
                             <td>{{ dataType.type }}</td>
                             <td><button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'columns')">
@@ -62,7 +62,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="dataType in vm.dataPool.request.repeat.dataTypes">
+                        <tr ng-repeat="dataType in vm.dataPool.request.repeatDataTypes">
                             <td>{{ dataType.header }}</td>
                             <td>{{ dataType.type }}</td>
                             <td><button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'repeat')">
@@ -90,7 +90,7 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.columns.rowsNumber" for="field_rows_number">Rows Number</label>
-                    <input type="number" min="0" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.columns.rowsNumber"
+                    <input type="number" min="0" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.rowsNumber"
                     />
                 </div>
                 <div class="form-group">
@@ -112,14 +112,8 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.repeat.times" for="field_times">Times</label>
-                    <input type="number" min="1" class="form-control" name="times" id="field_times" ng-model="vm.dataPool.request.repeat.times"
+                    <input type="number" min="1" class="form-control" name="times" id="field_times" ng-model="vm.dataPool.request.repeatTimes"
                     />
-                </div>
-                <div class="form-group">
-                    <label for="unique">
-                <input type="checkbox" id="unique" name="unique" ng-model="vm.dataPool.request.repeat.unique">
-                <span data-translate="dataPoolGeneratorApp.dataPool.request.repeat.unique">Unique Values</span>
-            </label>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="field_repeat_data_type_header">Header</label>

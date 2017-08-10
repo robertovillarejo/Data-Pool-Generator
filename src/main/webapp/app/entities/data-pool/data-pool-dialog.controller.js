@@ -16,6 +16,7 @@
         vm.addDataType = addDataType;
         vm.removeDataType = removeDataType;
         vm.toJson = toJson;
+        vm.addSourceData = addSourceData;
         vm.dataTypes = [
             "NAME",
             "LAST_NAME",
@@ -38,15 +39,10 @@
 
         if (vm.dataPool.id == null) {
             vm.dataPool.request = {
-                columns: {
-                    rowsNumber: 1,
-                    dataTypes: []
-                },
-                repeat: {
-                    times: 1,
-                    dataTypes: [],
-                    unique: false
-                }
+                rowsNumber: 1,
+                repeatTimes: 1,
+                addDataTypes: [],
+                repeatDataTypes: []
             };
         }
 
@@ -82,26 +78,27 @@
 
         function addDataType(place) {
             if ("columns" === place) {
-                vm.dataPool.request.columns.dataTypes.push(vm.columns.dataType);
+                vm.dataPool.request.addDataTypes.push(vm.columns.dataType);
+                vm.columns.dataType = {};
             } else {
-                vm.dataPool.request.repeat.dataTypes.push(vm.repeat.dataType);
+                vm.dataPool.request.repeatDataTypes.push(vm.repeat.dataType);
+                vm.repeat.dataType = {};
             }
-            vm.columns.dataType = {};
+            
         }
 
         function removeDataType(dataType, place) {
-            console.log(dataType);
             if ("columns" === place) {
-                var index = vm.dataPool.request.columns.dataTypes.indexOf(dataType);
-                vm.dataPool.request.columns.dataTypes.splice(index, 1);
+                var index = vm.dataPool.request.addDataTypes.indexOf(dataType);
+                vm.dataPool.request.addDataTypes.splice(index, 1);
             }
             if ("sourceData" === place) {
                 var index = vm.dataPool.sourceData.indexOf(dataType);
                 vm.dataPool.sourceData.splice(index, 1);
             }
             if ("repeat" === place) {
-                var index = vm.dataPool.request.repeat.dataTypes.indexOf(dataType);
-                vm.dataPool.request.repeat.dataTypes.splice(index, 1);
+                var index = vm.dataPool.request.repeatDataTypes.indexOf(dataType);
+                vm.dataPool.request.repeatDataTypes.splice(index, 1);
             }
         }
 

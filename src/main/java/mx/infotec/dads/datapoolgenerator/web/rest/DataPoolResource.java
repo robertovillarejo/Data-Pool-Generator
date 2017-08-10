@@ -4,14 +4,20 @@ import com.codahale.metrics.annotation.Timed;
 
 import mx.infotec.dads.datapoolgenerator.domain.DataPool;
 import mx.infotec.dads.datapoolgenerator.repository.DataPoolRepository;
+import mx.infotec.dads.datapoolgenerator.service.CsvGeneratorService;
 import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
 import mx.infotec.dads.datapoolgenerator.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -32,10 +38,13 @@ public class DataPoolResource {
     private final DataPoolRepository dataPoolRepository;
     
     private DataPoolGeneratorService dataPoolGenerator;
+    
+    private CsvGeneratorService csvGenerator;
 
-    public DataPoolResource(DataPoolRepository dataPoolRepository, DataPoolGeneratorService dataPoolGenerator) {
+    public DataPoolResource(DataPoolRepository dataPoolRepository, DataPoolGeneratorService dataPoolGenerator, CsvGeneratorService csvGenerator) {
         this.dataPoolRepository = dataPoolRepository;
         this.dataPoolGenerator = dataPoolGenerator;
+        this.csvGenerator = csvGenerator;
     }
     
     /**
@@ -119,5 +128,25 @@ public class DataPoolResource {
         log.debug("REST request to delete DataPool : {}", id);
         dataPoolRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+    }
+    
+    /**
+     * GET  /data-pools/csv/:id : get the dataPool in csv format.
+     *
+     * @param id the id of the dataPool to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the dataPool, or with status 404 (Not Found)
+     * @throws IOException 
+     */
+    @GetMapping("/data-pools/csv/{id}")
+    @Timed
+    public ResponseEntity<Resource> getCsvDataPool(@PathVariable String id) throws IOException {
+        log.debug("REST request to get the csv data of DataPool : {}", id);
+        DataPool dataPool = dataPoolRepository.findOne(id);
+        File csvFile = csvGenerator.writeCsv(dataPool);
+        Resource resource = new UrlResource(csvFile.toPath().toUri());
+        return ResponseEntity
+        		.ok()
+        		.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+csvFile.getName()+"\"")
+        		.body(resource);
     }
 }
