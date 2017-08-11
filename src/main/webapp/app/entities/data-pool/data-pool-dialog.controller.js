@@ -16,7 +16,7 @@
         vm.addDataType = addDataType;
         vm.removeDataType = removeDataType;
         vm.toJson = toJson;
-        vm.addSourceData = addSourceData;
+        vm.download = download;
         vm.dataTypes = [
             "NAME",
             "LAST_NAME",
@@ -67,6 +67,7 @@
         }
 
         function onSaveSuccess(result) {
+            console.log(result);
             $scope.$emit('dataPoolGeneratorApp:dataPoolUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
@@ -152,6 +153,10 @@
                 dataColumns.push(dataColumn);
             });
             vm.dataPool.sourceData = dataColumns;
+        }
+
+        function download() {
+            DataPool.download(vm.dataPool);
         }
     }
 })();

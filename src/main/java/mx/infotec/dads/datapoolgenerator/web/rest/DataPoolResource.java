@@ -137,7 +137,7 @@ public class DataPoolResource {
      * @return the ResponseEntity with status 200 (OK) and with body the dataPool, or with status 404 (Not Found)
      * @throws IOException 
      */
-    @GetMapping("/data-pools/csv/{id}")
+    @GetMapping("/data-pools/{id}.csv")
     @Timed
     public ResponseEntity<Resource> getCsvDataPool(@PathVariable String id) throws IOException {
         log.debug("REST request to get the csv data of DataPool : {}", id);
@@ -146,7 +146,7 @@ public class DataPoolResource {
         Resource resource = new UrlResource(csvFile.toPath().toUri());
         return ResponseEntity
         		.ok()
-        		.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+csvFile.getName()+"\"")
+        		.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+resource.getFilename()+"\"")
         		.body(resource);
     }
 }

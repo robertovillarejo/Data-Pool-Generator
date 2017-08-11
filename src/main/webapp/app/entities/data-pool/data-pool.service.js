@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     angular
         .module('dataPoolGeneratorApp')
@@ -6,11 +6,11 @@
 
     DataPool.$inject = ['$resource'];
 
-    function DataPool ($resource) {
-        var resourceUrl =  'api/data-pools/:id';
+    function DataPool($resource) {
+        var resourceUrl = 'api/data-pools/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': { method: 'GET', isArray: true },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -20,7 +20,11 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method: 'PUT' },
+            'download': {
+                method: 'GET',
+                url: 'api/data-pools/:id.csv'
+            }
         });
     }
 })();

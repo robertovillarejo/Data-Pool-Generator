@@ -10,39 +10,43 @@
             <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id" ng-model="vm.dataPool.id" readonly />
         </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.dataPool.name" />
-        </div>
         <div class="panel panel-default">
-            <div class="panel-heading">Data Pool</div>
+            <div class="panel-heading">
+                <input type="text" class="form-control" name="name" placeholder="Name" id="field_name" ng-model="vm.dataPool.name" />
+            </div>
             <div class="panel-body">
-                <h4>Source Data</h4>
+                <h4 data-translate="dataPoolGeneratorApp.dataPool.dataSource">Data Source</h4>
+                <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.dataSource" for="field_data_source">Data Source</label>
+                <input type="file" class="form-control" name="dataSource" ng-model="vm.dataSourceFile" id="field_data_source" />
+                <button type="button" class="btn btn-default" ng-click="vm.toJson()">
+                        <span class="glyphicon glyphicon-upload"></span>
+                    </button>
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Header</th>
-                            <th>Type</th>
+                            <th data-translate="dataPoolGeneratorApp.dataPool.dataType.header">Header</th>
+                            <th data-translate="dataPoolGeneratorApp.dataPool.dataType.type">Type</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="dataType in vm.dataPool.sourceData">
                             <td>{{ dataType.header }}</td>
                             <td>{{ dataType.type }}</td>
-                            <td><button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'sourceData')">
+                            <td>
+                                <button type="button" class="btn btn-default" ng-click="vm.removeDataType(dataType, 'sourceData')">
                                 <span class="glyphicon glyphicon-remove"></span>
-                            </button></td>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <h4>Columns</h4>
+                <h4 data-translate="dataPoolGeneratorApp.dataPool.request.addDataTypes"> Add Columns</h4>
+                <div class="form-group">
+                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.rowsNumber" for="field_rows_number">Rows Number</label>
+                    <input type="number" min="1" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.rowsNumber"
+                    />
+                </div>
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Header</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr ng-repeat="dataType in vm.dataPool.request.addDataTypes">
                             <td>{{ dataType.header }}</td>
@@ -51,16 +55,31 @@
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button></td>
                         </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" name="dataTypeHeader" placeholder="Header" id="field_data_type_header" ng-model="vm.columns.dataType.header"
+                                />
+                            </td>
+                            <td>
+                                <select class="form-control" name="dataType" placeholder="Type" ng-model="vm.columns.dataType.type">
+                                    <option value="" disabled selected>Type</option>
+                                    <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-default" ng-click="vm.addDataType('columns')">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-                <h4>Repeat</h4>
+                <div class="form-group">
+                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.repeatTimes" for="field_times">Times</label>
+                    <input type="number" min="1" class="form-control" name="times" id="field_times" ng-model="vm.dataPool.request.repeatTimes"
+                    />
+                </div>
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Header</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr ng-repeat="dataType in vm.dataPool.request.repeatDataTypes">
                             <td>{{ dataType.header }}</td>
@@ -69,64 +88,25 @@
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button></td>
                         </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" name="dataTypeHeader" placeholder="Header" id="field_data_type_header" ng-model="vm.repeat.dataType.header"
+                                />
+                            </td>
+                            <td>
+                                <select class="form-control" name="dataType" placeholder="Type" ng-model="vm.repeat.dataType.type">
+                                    <option value="" disabled selected>Type</option>
+                                    <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-default" ng-click="vm.addDataType('repeat')">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Source Data</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.dataSource" for="field_data_source">Data Source</label>
-                    <input type="file" class="form-control" name="dataSource" ng-model="vm.dataSourceFile" id="field_data_source" />
-                    <button type="button" class="btn btn-default" ng-click="vm.toJson()">
-                <span class="glyphicon glyphicon-upload"></span>
-            </button>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Add Columns</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.columns.rowsNumber" for="field_rows_number">Rows Number</label>
-                    <input type="number" min="0" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.rowsNumber"
-                    />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="field_data_type_header">Header</label>
-                    <input type="text" class="form-control" name="dataTypeHeader" id="field_data_type_header" ng-model="vm.columns.dataType.header"
-                    />
-                    <label>Data Type</label>
-                    <select class="form-control" name="dataType" ng-model="vm.columns.dataType.type">
-                <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
-            </select>
-                    <button type="button" class="btn btn-default" ng-click="vm.addDataType('columns')">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Repeat</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.repeat.times" for="field_times">Times</label>
-                    <input type="number" min="1" class="form-control" name="times" id="field_times" ng-model="vm.dataPool.request.repeatTimes"
-                    />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="field_repeat_data_type_header">Header</label>
-                    <input type="text" class="form-control" name="repeatDataTypeHeader" id="field_repeat_data_type_header" ng-model="vm.repeat.dataType.header"
-                    />
-                    <label>Data Type</label>
-                    <select class="form-control" name="dataType" ng-model="vm.repeat.dataType.type">
-                        <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
-                    </select>
-                    <button type="button" class="btn btn-default" ng-click="vm.addDataType('repeat')">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-                </div>
             </div>
         </div>
     </div>
@@ -136,6 +116,9 @@
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-disabled="!vm.dataPool.id" ng-click="vm.download()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-download"></span>&nbsp;<span>Download</span>
         </button>
     </div>
 </form>

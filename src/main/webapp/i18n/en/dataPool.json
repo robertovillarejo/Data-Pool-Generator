@@ -1,6 +1,6 @@
 {
     "dataPoolGeneratorApp": {
-        "dataPool" : {
+        "dataPool": {
             "home": {
                 "title": "Data Pools",
                 "createLabel": "Create a new Data Pool",
@@ -17,16 +17,16 @@
             },
             "name": "Name",
             "data": "Data",
+            "dataSource": "Data Source",
             "request": {
-                "columns": {
-                    "rowsNumber": "Rows number",
-                    "dataTypes": "Data Types"
-                },
-                "repeat": {
-                    "times": "Repeatition times",
-                    "unique": "Unique values",
-                    "dataTypes": "Data Types"
-                }
+                "rowsNumber": "Rows number",
+                "addDataTypes": "Columnas agregadas",
+                "repeatDataTypes": "Repeat",
+                "repeatTimes": "Repeatition times"
+            },
+            "dataType": {
+                "header": "Header",
+                "type": "Type"
             }
         }
     }

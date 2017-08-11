@@ -15,18 +15,18 @@
             "detail": {
                 "title": "Data Pool"
             },
-            "name": "Name",
+            "name": "Nombre",
             "data": "Datos",
+            "dataSource": "Datos Iniciales",
             "request": {
-                "columns": {
-                    "rowsNumber": "Número de filas",
-                    "dataTypes": "Tipos de datos"
-                },
-                "repeat": {
-                    "times": "Número de repeticiones",
-                    "unique": "Valores únicos",
-                    "dataTypes": "Tipos de datos"
-                }
+                "rowsNumber": "Número de filas",
+                "addDataTypes": "Columnas agregadas",
+                "repeatDataTypes": "Repetir",
+                "repeatTimes": "Número de repeticiones"
+            },
+            "dataType": {
+                "header": "Encabezado",
+                "type": "Tipo"
             }
         }
     }

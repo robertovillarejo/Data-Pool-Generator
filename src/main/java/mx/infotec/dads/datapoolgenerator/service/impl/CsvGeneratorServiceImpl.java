@@ -36,7 +36,7 @@ public class CsvGeneratorServiceImpl implements CsvGeneratorService {
 	public File writeCsv(DataPool dataPool) throws IOException {
 		if (dataPool.getData().isEmpty()) return null; 
 		File csvFile = Files.createTempFile(dataPool.getName(), ".csv").toFile();
-		CsvWriter csvWriter = new CsvWriter(csvFile, settings);
+		CsvWriter csvWriter = new CsvWriter(csvFile, "windows-1250", settings);
 		writeHeaders(dataPool, csvWriter);
 		writeData(dataPool, csvWriter);
 		csvWriter.close();
