@@ -20,7 +20,7 @@
             "dataSource": "Data Source",
             "request": {
                 "rowsNumber": "Rows number",
-                "addDataTypes": "Columnas agregadas",
+                "addDataTypes": "Added columns",
                 "repeatDataTypes": "Repeat",
                 "repeatTimes": "Repeatition times"
             },

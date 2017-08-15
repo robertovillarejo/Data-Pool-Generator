@@ -12,12 +12,12 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <input type="text" class="form-control" name="name" placeholder="Name" id="field_name" ng-model="vm.dataPool.name" />
+                <input type="text" class="form-control" name="name" placeholder="Name" translate translate-attr-placeholder="dataPoolGeneratorApp.dataPool.name" id="field_name" ng-model="vm.dataPool.name" />
             </div>
             <div class="panel-body">
                 <h4 data-translate="dataPoolGeneratorApp.dataPool.dataSource">Data Source</h4>
                 <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.dataSource" for="field_data_source">Data Source</label>
-                <input type="file" class="form-control" name="dataSource" ng-model="vm.dataSourceFile" id="field_data_source" />
+                <input type="file" class="form-control" name="dataSource" id="field_data_source" />
                 <button type="button" class="btn btn-default" ng-click="vm.toJson()">
                         <span class="glyphicon glyphicon-upload"></span>
                     </button>
@@ -43,7 +43,7 @@
                 <h4 data-translate="dataPoolGeneratorApp.dataPool.request.addDataTypes"> Add Columns</h4>
                 <div class="form-group">
                     <label class="control-label" data-translate="dataPoolGeneratorApp.dataPool.request.rowsNumber" for="field_rows_number">Rows Number</label>
-                    <input type="number" min="1" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.rowsNumber"
+                    <input type="number" min="1" ng-disabled="vm.dataPool.sourceData.length > 0" class="form-control" name="rowsNumber" id="field_rows_number" ng-model="vm.dataPool.request.rowsNumber"
                     />
                 </div>
                 <table class="table table-hover">
@@ -57,12 +57,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" class="form-control" name="dataTypeHeader" placeholder="Header" id="field_data_type_header" ng-model="vm.columns.dataType.header"
+                                <input type="text" class="form-control" name="dataTypeHeader" placeholder="Header" translate translate-attr-placeholder="dataPoolGeneratorApp.dataPool.dataType.header" id="field_data_type_header" ng-model="vm.columns.dataType.header"
                                 />
                             </td>
                             <td>
                                 <select class="form-control" name="dataType" placeholder="Type" ng-model="vm.columns.dataType.type">
-                                    <option value="" disabled selected>Type</option>
+                                    <option value="" disabled selected data-translate="dataPoolGeneratorApp.dataPool.dataType.type">Type</option>
                                     <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
                                 </select>
                             </td>
@@ -90,12 +90,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" class="form-control" name="dataTypeHeader" placeholder="Header" id="field_data_type_header" ng-model="vm.repeat.dataType.header"
+                                <input type="text" class="form-control" name="dataTypeHeader" placeholder="Header" translate translate-attr-placeholder="dataPoolGeneratorApp.dataPool.dataType.header" id="field_data_type_header" ng-model="vm.repeat.dataType.header"
                                 />
                             </td>
                             <td>
                                 <select class="form-control" name="dataType" placeholder="Type" ng-model="vm.repeat.dataType.type">
-                                    <option value="" disabled selected>Type</option>
+                                    <option value="" disabled selected data-translate="dataPoolGeneratorApp.dataPool.dataType.type">Type</option>
                                     <option ng-repeat="dataType in vm.dataTypes">{{ dataType }}</option>
                                 </select>
                             </td>
@@ -117,7 +117,7 @@
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
-        <button type="button" ng-disabled="!vm.dataPool.id" ng-click="vm.download()" class="btn btn-primary">
+        <button type="button" ng-disabled="!vm.dataPool.id" ng-csv="vm.toCsv()" csv-label="true" filename="{{vm.dataPool.name}}.csv" charset="windows-1250" class="btn btn-primary">
             <span class="glyphicon glyphicon-download"></span>&nbsp;<span>Download</span>
         </button>
     </div>

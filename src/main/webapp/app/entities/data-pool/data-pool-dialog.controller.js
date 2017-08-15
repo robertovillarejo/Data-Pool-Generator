@@ -16,7 +16,7 @@
         vm.addDataType = addDataType;
         vm.removeDataType = removeDataType;
         vm.toJson = toJson;
-        vm.download = download;
+        vm.toCsv = toCsv;
         vm.dataTypes = [
             "NAME",
             "LAST_NAME",
@@ -39,8 +39,8 @@
 
         if (vm.dataPool.id == null) {
             vm.dataPool.request = {
-                rowsNumber: 1,
-                repeatTimes: 1,
+                rowsNumber: 10,
+                repeatTimes: 2,
                 addDataTypes: [],
                 repeatDataTypes: []
             };
@@ -48,6 +48,7 @@
 
         vm.columns = { dataType: {} };
         vm.repeat = { dataType: {} };
+        vm.csvArray = [];
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
@@ -67,7 +68,6 @@
         }
 
         function onSaveSuccess(result) {
-            console.log(result);
             $scope.$emit('dataPoolGeneratorApp:dataPoolUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
@@ -81,7 +81,8 @@
             if ("columns" === place) {
                 vm.dataPool.request.addDataTypes.push(vm.columns.dataType);
                 vm.columns.dataType = {};
-            } else {
+            } 
+            if ("repeat" === place) {
                 vm.dataPool.request.repeatDataTypes.push(vm.repeat.dataType);
                 vm.repeat.dataType = {};
             }
@@ -118,14 +119,16 @@
                 complete: addSourceData,
                 error: undefined,
                 download: false,
-                skipEmptyLines: false,
+                skipEmptyLines: true,
                 chunk: undefined,
                 fastMode: undefined,
                 beforeFirstChunk: undefined,
                 withCredentials: undefined
             }
-            var fileElement = $("#field_data_source");
-            Papa.parse(fileElement[0].files[0], config);
+            var fileElement = $("#field_data_source")[0].files[0];
+            if (fileElement !== undefined) {
+                Papa.parse(fileElement, config);
+            }
         }
 
         function addSourceData(results) {
@@ -139,24 +142,32 @@
             results.data.forEach(function (element) {
                 headers.forEach(function (header) {
                     var data = element[header];
-                    if (data !== null && data !== undefined && data !== "") {
-                        columns[header].push(data);
-                    }
+                    columns[header].push(data);
                 });
             });
-            var dataColumns = [];
+            vm.dataPool.sourceData = [];
             //Convert data to DataColumn Array
             headers.forEach(function (header) {
                 var dataColumn = {};
                 dataColumn.header = header;
                 dataColumn.data = columns[header];
-                dataColumns.push(dataColumn);
+                vm.dataPool.sourceData.push(dataColumn);
             });
-            vm.dataPool.sourceData = dataColumns;
         }
 
-        function download() {
-            DataPool.download(vm.dataPool);
+        function toCsv() {
+            if (vm.dataPool.data) {
+                vm.csvArray = [];
+                var rowsNumber = vm.dataPool.data[0].data.length;
+                for (var r = 0; r < rowsNumber; r++) {
+                    var row = {};
+                    vm.dataPool.data.forEach(function (dataColumn){
+                        row[dataColumn.header] = dataColumn.data[r];
+                    });
+                    vm.csvArray.push(row);
+                }
+            }
+            return vm.csvArray;
         }
     }
 })();
