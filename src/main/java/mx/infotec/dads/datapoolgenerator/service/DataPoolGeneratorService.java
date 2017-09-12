@@ -13,8 +13,11 @@ public interface DataPoolGeneratorService {
 		copyDataSource(dataPool);
 		addColumns(dataPool);
 		repeatData(dataPool);
+		enumerate(dataPool);
 		return dataPool;
 	}
+
+	public abstract void enumerate(DataPool dataPool);
 
 	public abstract void repeatData(DataPool dataPool);
 

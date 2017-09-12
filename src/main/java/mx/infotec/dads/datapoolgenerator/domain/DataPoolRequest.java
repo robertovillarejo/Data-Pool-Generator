@@ -17,6 +17,8 @@ public class DataPoolRequest {
 	private List<DataColumn> repeatDataTypes  = new ArrayList<>();
 	
 	private int repeatTimes;
+	
+	private Numerator enumerator;
 
 	public int getRowsNumber() {
 		return rowsNumber;
@@ -48,6 +50,14 @@ public class DataPoolRequest {
 
 	public void setRepeatTimes(int repeatTimes) {
 		this.repeatTimes = repeatTimes;
-	}	
+	}
+
+	public Numerator getEnumerator() {
+		return enumerator;
+	}
+
+	public void setEnumerator(Numerator enumerator) {
+		this.enumerator = enumerator;
+	}
 
 }

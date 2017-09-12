@@ -23,7 +23,7 @@ public class JavaFakerGeneratorServiceImpl implements JavaFakerGeneratorService 
 
 	private final Logger log = LoggerFactory.getLogger(JavaFakerGeneratorServiceImpl.class);
 
-	Faker faker;
+	private Faker faker;
 
 	public JavaFakerGeneratorServiceImpl() {
 		faker = new Faker(new Locale("es-MX"));
@@ -125,6 +125,6 @@ public class JavaFakerGeneratorServiceImpl implements JavaFakerGeneratorService 
 		for (DataType dataType : dataTypes) {
 			data.add(generate(dataType, n));
 		}
-		return null;
+		return data;
 	}
 }

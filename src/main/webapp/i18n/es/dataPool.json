@@ -22,7 +22,14 @@
                 "rowsNumber": "Número de filas",
                 "addDataTypes": "Columnas agregadas",
                 "repeatDataTypes": "Repetir",
-                "repeatTimes": "Número de repeticiones"
+                "repeatTimes": "Número de repeticiones",
+                "enumerator": {
+                    "header": "Encabezado",
+                    "title": "Numerador",
+                    "initialValue": "Valor Inicial",
+                    "increment": "Incremento",
+                    "template": "Plantilla"
+                }
             },
             "dataType": {
                 "header": "Encabezado",

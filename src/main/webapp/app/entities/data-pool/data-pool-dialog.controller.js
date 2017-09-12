@@ -59,6 +59,7 @@
         }
 
         function save() {
+            console.log(vm.dataPool);
             vm.isSaving = true;
             if (vm.dataPool.id !== null) {
                 DataPool.update(vm.dataPool, onSaveSuccess, onSaveError);

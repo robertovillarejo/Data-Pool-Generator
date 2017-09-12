@@ -22,7 +22,14 @@
                 "rowsNumber": "Rows number",
                 "addDataTypes": "Added columns",
                 "repeatDataTypes": "Repeat",
-                "repeatTimes": "Repeatition times"
+                "repeatTimes": "Repeatition times",
+                "enumerator": {
+                    "header": "Header",
+                    "title": "Enumerator",
+                    "initialValue": "Initial Value",
+                    "increment": "Increment",
+                    "template": "Template"
+                }
             },
             "dataType": {
                 "header": "Header",

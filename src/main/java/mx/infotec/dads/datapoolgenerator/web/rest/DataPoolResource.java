@@ -1,28 +1,36 @@
 package mx.infotec.dads.datapoolgenerator.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
-import mx.infotec.dads.datapoolgenerator.domain.DataPool;
-import mx.infotec.dads.datapoolgenerator.repository.DataPoolRepository;
-import mx.infotec.dads.datapoolgenerator.service.CsvGeneratorService;
-import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
-import mx.infotec.dads.datapoolgenerator.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.codahale.metrics.annotation.Timed;
 
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
+import mx.infotec.dads.datapoolgenerator.domain.DataPool;
+import mx.infotec.dads.datapoolgenerator.repository.DataPoolRepository;
+import mx.infotec.dads.datapoolgenerator.service.CsvGeneratorService;
+import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
+import mx.infotec.dads.datapoolgenerator.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing DataPool.
@@ -63,7 +71,7 @@ public class DataPoolResource {
         }
         DataPool result = dataPoolRepository.save(dataPoolGenerator.generate(dataPool));
         return ResponseEntity.created(new URI("/api/data-pools/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
             .body(result);
     }
 
@@ -86,7 +94,7 @@ public class DataPoolResource {
         DataPool result;
         result = dataPoolRepository.save(dataPoolGenerator.generate(dataPool));
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataPool.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataPool.getId()))
             .body(result);
     }
 
@@ -131,7 +139,7 @@ public class DataPoolResource {
     }
     
     /**
-     * GET  /data-pools/csv/:id : get the dataPool in csv format.
+     * GET  /data-pools/:id.csv : get the dataPool in csv format.
      *
      * @param id the id of the dataPool to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the dataPool, or with status 404 (Not Found)
@@ -148,5 +156,10 @@ public class DataPoolResource {
         		.ok()
         		.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+resource.getFilename()+"\"")
         		.body(resource);
+    }
+    
+    @GetMapping("/data-pools/grouped/{id}")
+    public DataPool getDataPoolGroupBy(@PathVariable String id, @RequestParam String groupParam) {
+    	return dataPoolRepository.findByIdGroupBy(id, groupParam);
     }
 }

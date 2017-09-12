@@ -1,7 +1,9 @@
 package mx.infotec.dads.datapoolgenerator.service.impl;
 
+import mx.infotec.dads.datapoolgenerator.domain.Numerator;
 import mx.infotec.dads.datapoolgenerator.domain.DataColumn;
 import mx.infotec.dads.datapoolgenerator.domain.DataPool;
+import mx.infotec.dads.datapoolgenerator.domain.DataType;
 import mx.infotec.dads.datapoolgenerator.service.DataPoolGeneratorService;
 import mx.infotec.dads.datapoolgenerator.service.JavaFakerGeneratorService;
 
@@ -108,6 +110,26 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 			result.add(dataCol);
 		}
 		return result;
+	}
+
+	@Override
+	public void enumerate(DataPool dataPool) {
+		if (dataPool.getRequest().getEnumerator() == null) return;
+		int rowsNumber;
+		if (dataPool.getSourceData() == null || dataPool.getSourceData().isEmpty()) rowsNumber = dataPool.getRequest().getRowsNumber();
+		else rowsNumber = dataPool.getSourceData().get(0).getData().size();
+		Numerator enumerator = dataPool.getRequest().getEnumerator();
+		DataColumn numeration = new DataColumn();
+		numeration.setHeader(enumerator.getHeader());
+		numeration.setType(DataType.AUTO_INCREMENT);
+		int repeat = dataPool.getRequest().getRepeatTimes();
+		for (int i = 0; i < repeat; i++) {
+			String number = enumerator.generate();
+			for (int j = 0; j < rowsNumber; j++) {
+				numeration.getData().add(number);
+			}
+		}
+		dataPool.getData().add(numeration);
 	}
 
 }
