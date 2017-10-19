@@ -52,7 +52,7 @@ public class CsvGeneratorServiceImpl implements CsvGeneratorService {
 	}
 
 	private void writeData(DataPool dataPool, CsvWriter csvWriter) {
-		int rowsNumber = dataPool.getData().get(0).getData().size();
+		int rowsNumber = dataPool.getRequestOrSizeRowsNumber();
 		for (int i = 0; i < rowsNumber; i++) {
 			List<String> row = new ArrayList<>();
 			for (DataColumn dataColumn : dataPool.getData()) {

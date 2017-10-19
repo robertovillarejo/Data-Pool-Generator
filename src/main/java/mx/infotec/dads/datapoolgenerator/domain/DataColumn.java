@@ -1,5 +1,6 @@
 package mx.infotec.dads.datapoolgenerator.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *
  */
 @JsonPropertyOrder({"header", "type", "data"})
-public class DataColumn {
+public class DataColumn implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@JsonProperty(value="header")
 	private String header;
 	

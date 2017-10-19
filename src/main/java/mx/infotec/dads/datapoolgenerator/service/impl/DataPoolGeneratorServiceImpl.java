@@ -45,7 +45,7 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 	@Override
 	public void repeatData(DataPool dataPool) {
 		// Repeat current data
-		repeatData(dataPool, dataPool.getRequest().getRepeatTimes());
+		repeatData(dataPool, dataPool.getRepeatTimes());
 		//Generate and add repeated data
 		generateRepeatData(dataPool);
 
@@ -65,10 +65,8 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 
 	@Override
 	public void addColumns(DataPool dataPool) {
-		int rowsNumber;
-		if (dataPool.getSourceData() == null || dataPool.getSourceData().isEmpty()) rowsNumber = dataPool.getRequest().getRowsNumber();
-		else rowsNumber = dataPool.getData().get(0).getData().size();
-		dataPool.getData().addAll(generate(dataPool.getRequest().getAddDataTypes(), rowsNumber));
+		int rowsNumber = dataPool.getRequestOrSizeRowsNumber();
+		dataPool.getData().addAll(generate(dataPool.getAddDataTypes(), rowsNumber));
 	}
 
 	private List<DataColumn> generate(List<DataColumn> dataColumns, int n) {
@@ -80,12 +78,10 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 	}
 
 	private void generateRepeatData(DataPool dataPool) {
-		int rowsNumber;
-		if (dataPool.getSourceData() == null || dataPool.getSourceData().isEmpty()) rowsNumber = dataPool.getRequest().getRowsNumber();
-		else rowsNumber = dataPool.getSourceData().get(0).getData().size();
+		int rowsNumber = dataPool.getRequestOrSizeRowsNumber();
 		dataPool.getData().addAll(
 				generateRepeat(
-						dataPool.getRequest().getRepeatDataTypes(), rowsNumber, dataPool.getRequest().getRepeatTimes()
+						dataPool.getRepeatDataTypes(), rowsNumber, dataPool.getRepeatTimes()
 						)
 				);
 
@@ -114,15 +110,13 @@ public class DataPoolGeneratorServiceImpl implements DataPoolGeneratorService {
 
 	@Override
 	public void enumerate(DataPool dataPool) {
-		if (dataPool.getRequest().getEnumerator() == null) return;
-		int rowsNumber;
-		if (dataPool.getSourceData() == null || dataPool.getSourceData().isEmpty()) rowsNumber = dataPool.getRequest().getRowsNumber();
-		else rowsNumber = dataPool.getSourceData().get(0).getData().size();
-		Numerator enumerator = dataPool.getRequest().getEnumerator();
+		if (dataPool.getEnumerator() == null) return;
+		int rowsNumber = dataPool.getRequestOrSizeRowsNumber();
+		Numerator enumerator = dataPool.getEnumerator();
 		DataColumn numeration = new DataColumn();
 		numeration.setHeader(enumerator.getHeader());
 		numeration.setType(DataType.AUTO_INCREMENT);
-		int repeat = dataPool.getRequest().getRepeatTimes();
+		int repeat = dataPool.getRepeatTimes();
 		for (int i = 0; i < repeat; i++) {
 			String number = enumerator.generate();
 			for (int j = 0; j < rowsNumber; j++) {

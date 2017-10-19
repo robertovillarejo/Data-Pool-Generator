@@ -78,6 +78,40 @@ public class DataPool implements Serializable {
 	public void setSourceData(List<DataColumn> sourceData) {
 		this.sourceData = sourceData;
 	}
+	
+	public int getRowsNumber() {
+		return request.getRowsNumber();
+	}
+	
+	public List<DataColumn> getAddDataTypes() {
+		return request.getAddDataTypes();
+	}
+	
+	public List<DataColumn> getRepeatDataTypes() {
+		return request.getRepeatDataTypes();
+	}
+	
+	public int getRepeatTimes() {
+		return getRepeatTimes();
+	}
+	
+	public Numerator getEnumerator() {
+		return getEnumerator();
+	}
+	
+	/**
+	 * 
+	 * @return the size of first DataColumn in sourceData if not null
+	 * else the rowsNumber in request
+	 */
+	public int getRequestOrSizeRowsNumber() {
+		if (sourceData == null || sourceData.isEmpty()){
+			return request.getRowsNumber();
+		}
+		else {
+			return data.get(0).getData().size();
+		}
+	}
 
 	@Override
     public boolean equals(Object o) {
