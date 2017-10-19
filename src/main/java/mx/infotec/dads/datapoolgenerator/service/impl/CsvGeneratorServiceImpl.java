@@ -37,15 +37,15 @@ public class CsvGeneratorServiceImpl implements CsvGeneratorService {
 		if (dataPool.getData().isEmpty()) return null; 
 		File csvFile = Files.createTempFile(dataPool.getName(), ".csv").toFile();
 		CsvWriter csvWriter = new CsvWriter(csvFile, "windows-1250", settings);
-		writeHeaders(dataPool, csvWriter);
+		writeHeaders(dataPool.getData(), csvWriter);
 		writeData(dataPool, csvWriter);
 		csvWriter.close();
 		return csvFile;
 	}
 
-	private void writeHeaders(DataPool dataPool, CsvWriter csvWriter) {
+	private void writeHeaders(List<DataColumn> data, CsvWriter csvWriter) {
 		List<String> headers = new ArrayList<>();
-		for (DataColumn dataColumn : dataPool.getData()) {
+		for (DataColumn dataColumn : data) {
 			headers.add(dataColumn.getHeader());
 		}
 		csvWriter.writeHeaders(headers);

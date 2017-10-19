@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -79,24 +80,29 @@ public class DataPool implements Serializable {
 		this.sourceData = sourceData;
 	}
 	
+	@JsonIgnore
 	public int getRowsNumber() {
 		return request.getRowsNumber();
 	}
 	
+	@JsonIgnore
 	public List<DataColumn> getAddDataTypes() {
 		return request.getAddDataTypes();
 	}
 	
+	@JsonIgnore
 	public List<DataColumn> getRepeatDataTypes() {
 		return request.getRepeatDataTypes();
 	}
 	
+	@JsonIgnore
 	public int getRepeatTimes() {
-		return getRepeatTimes();
+		return request.getRepeatTimes();
 	}
 	
+	@JsonIgnore
 	public Numerator getEnumerator() {
-		return getEnumerator();
+		return request.getEnumerator();
 	}
 	
 	/**
@@ -104,6 +110,7 @@ public class DataPool implements Serializable {
 	 * @return the size of first DataColumn in sourceData if not null
 	 * else the rowsNumber in request
 	 */
+	@JsonIgnore
 	public int getRequestOrSizeRowsNumber() {
 		if (sourceData == null || sourceData.isEmpty()){
 			return request.getRowsNumber();

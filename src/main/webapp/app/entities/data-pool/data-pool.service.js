@@ -20,7 +20,11 @@
                     return data;
                 }
             },
-            'update': { method: 'PUT' }
+            'update': { method: 'PUT' },
+            'download': { 
+                method: 'GET',
+                url: 'api/data-pools/:id.csv'
+            }
         });
     }
 })();

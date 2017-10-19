@@ -1,5 +1,6 @@
 package mx.infotec.dads.datapoolgenerator.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,13 @@ import java.util.List;
  * @author Roberto Villarejo Martínez
  *
  */
-public class DataPoolRequest {
+public class DataPoolRequest implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int rowsNumber;
 	
 	private List<DataColumn> addDataTypes  = new ArrayList<>();
